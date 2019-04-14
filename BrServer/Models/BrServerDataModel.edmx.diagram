@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2033016d46f24944853326dc8bd14051" Name="Diagram1">
+        <EntityTypeShape EntityType="charsoog_BrDBModel.Character" Width="1.5" PointX="11.375" PointY="5.375" />
+        <EntityTypeShape EntityType="charsoog_BrDBModel.Emote" Width="1.5" PointX="4.875" PointY="5.75" />
+        <EntityTypeShape EntityType="charsoog_BrDBModel.Flag" Width="1.5" PointX="4.25" PointY="3.125" />
+        <EntityTypeShape EntityType="charsoog_BrDBModel.Parachute" Width="1.5" PointX="11.125" PointY="3.25" />
+        <EntityTypeShape EntityType="charsoog_BrDBModel.Player" Width="1.5" PointX="7.625" PointY="2.125" />
+        <AssociationConnector Association="charsoog_BrDBModel.PlayerCharacter" />
+        <AssociationConnector Association="charsoog_BrDBModel.PlayerEmot" />
+        <AssociationConnector Association="charsoog_BrDBModel.PlayerFlag" />
+        <AssociationConnector Association="charsoog_BrDBModel.PlayerParachute" />
+        <AssociationConnector Association="charsoog_BrDBModel.FK_Player_Characters" />
+        <AssociationConnector Association="charsoog_BrDBModel.FK_Player_Emote" />
+        <AssociationConnector Association="charsoog_BrDBModel.FK_Player_Flag" />
+        <AssociationConnector Association="charsoog_BrDBModel.FK_Player_Parachute" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="charsoog_BrDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Characters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="HasByDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="HasByDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="HasByDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parachute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="HasByDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="CurrentCharacter" Type="int" Nullable="false" />
+          <Property Name="CurrentFlag" Type="int" Nullable="false" />
+          <Property Name="CurrentPara" Type="int" Nullable="false" />
+          <Property Name="CurrentEmote" Type="int" Nullable="false" />
+          <Property Name="CoinCount" Type="int" Nullable="false" />
+          <Property Name="TicketCount" Type="int" Nullable="false" />
+          <Property Name="HasBattlePass" Type="bit" Nullable="false" />
+          <Property Name="AiBehaviorIndex" Type="smallint" Nullable="false" />
+          <Property Name="TotalBattles" Type="int" Nullable="false" />
+          <Property Name="TotalWins" Type="int" Nullable="false" />
+          <Property Name="TotalKills" Type="int" Nullable="false" />
+          <Property Name="DoubleKills" Type="int" Nullable="false" />
+          <Property Name="TripleKills" Type="int" Nullable="false" />
+          <Property Name="ItemsCollected" Type="int" Nullable="false" />
+          <Property Name="GunsCollected" Type="int" Nullable="false" />
+          <Property Name="SupplyDrop" Type="int" Nullable="false" />
+          <Property Name="SupplyCreates" Type="int" Nullable="false" />
+          <Property Name="Experience" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayerCharacter">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+            <PropertyRef Name="CharacterID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="CharacterID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayerEmot">
+          <Key>
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="EmoteID" />
+          </Key>
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="EmoteID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayerFlag">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+            <PropertyRef Name="FlagID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="FlagID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayerParachute">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+            <PropertyRef Name="ParachuteID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="ParachuteID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Player_Characters">
+          <End Role="Characters" Type="Self.Characters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentCharacter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Emote">
+          <End Role="Emote" Type="Self.Emote" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentEmote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Flag">
+          <End Role="Flag" Type="Self.Flag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentFlag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Parachute">
+          <End Role="Parachute" Type="Self.Parachute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parachute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentPara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerCharacter_Characters">
+          <End Role="Characters" Type="Self.Characters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayerCharacter" Type="Self.PlayerCharacter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerCharacter">
+              <PropertyRef Name="CharacterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerCharacter_Users">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlayerCharacter" Type="Self.PlayerCharacter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerCharacter">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerEmot_Emote">
+          <End Role="Emote" Type="Self.Emote" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayerEmot" Type="Self.PlayerEmot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerEmot">
+              <PropertyRef Name="EmoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerEmot_Users">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlayerEmot" Type="Self.PlayerEmot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerEmot">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerFlag_Flag">
+          <End Role="Flag" Type="Self.Flag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayerFlag" Type="Self.PlayerFlag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerFlag">
+              <PropertyRef Name="FlagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerFlag_Users">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlayerFlag" Type="Self.PlayerFlag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerFlag">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerParachute_Parachute">
+          <End Role="Parachute" Type="Self.Parachute" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayerParachute" Type="Self.PlayerParachute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parachute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerParachute">
+              <PropertyRef Name="ParachuteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerParachute_Users">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="PlayerParachute" Type="Self.PlayerParachute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlayerParachute">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="charsoog_BrDBModelStoreContainer">
+          <EntitySet Name="Characters" EntityType="Self.Characters" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="Emote" EntityType="Self.Emote" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="Flag" EntityType="Self.Flag" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="Parachute" EntityType="Self.Parachute" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="PlayerCharacter" EntityType="Self.PlayerCharacter" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="PlayerEmot" EntityType="Self.PlayerEmot" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="PlayerFlag" EntityType="Self.PlayerFlag" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <EntitySet Name="PlayerParachute" EntityType="Self.PlayerParachute" Schema="charsoog_BrSeverUser" store:Type="Tables" />
+          <AssociationSet Name="FK_Player_Characters" Association="Self.FK_Player_Characters">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Emote" Association="Self.FK_Player_Emote">
+            <End Role="Emote" EntitySet="Emote" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Flag" Association="Self.FK_Player_Flag">
+            <End Role="Flag" EntitySet="Flag" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Parachute" Association="Self.FK_Player_Parachute">
+            <End Role="Parachute" EntitySet="Parachute" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerCharacter_Characters" Association="Self.FK_PlayerCharacter_Characters">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="PlayerCharacter" EntitySet="PlayerCharacter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerCharacter_Users" Association="Self.FK_PlayerCharacter_Users">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerCharacter" EntitySet="PlayerCharacter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerEmot_Emote" Association="Self.FK_PlayerEmot_Emote">
+            <End Role="Emote" EntitySet="Emote" />
+            <End Role="PlayerEmot" EntitySet="PlayerEmot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerEmot_Users" Association="Self.FK_PlayerEmot_Users">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerEmot" EntitySet="PlayerEmot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerFlag_Flag" Association="Self.FK_PlayerFlag_Flag">
+            <End Role="Flag" EntitySet="Flag" />
+            <End Role="PlayerFlag" EntitySet="PlayerFlag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerFlag_Users" Association="Self.FK_PlayerFlag_Users">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerFlag" EntitySet="PlayerFlag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerParachute_Parachute" Association="Self.FK_PlayerParachute_Parachute">
+            <End Role="Parachute" EntitySet="Parachute" />
+            <End Role="PlayerParachute" EntitySet="PlayerParachute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerParachute_Users" Association="Self.FK_PlayerParachute_Users">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="PlayerParachute" EntitySet="PlayerParachute" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="charsoog_BrDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="charsoog_BrDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Characters" EntityType="charsoog_BrDBModel.Character" />
+          <EntitySet Name="Emotes" EntityType="charsoog_BrDBModel.Emote" />
+          <EntitySet Name="Flags" EntityType="charsoog_BrDBModel.Flag" />
+          <EntitySet Name="Parachutes" EntityType="charsoog_BrDBModel.Parachute" />
+          <EntitySet Name="Players" EntityType="charsoog_BrDBModel.Player" />
+          <AssociationSet Name="PlayerCharacter" Association="charsoog_BrDBModel.PlayerCharacter">
+            <End Role="Character" EntitySet="Characters" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerEmot" Association="charsoog_BrDBModel.PlayerEmot">
+            <End Role="Emote" EntitySet="Emotes" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerFlag" Association="charsoog_BrDBModel.PlayerFlag">
+            <End Role="Flag" EntitySet="Flags" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerParachute" Association="charsoog_BrDBModel.PlayerParachute">
+            <End Role="Parachute" EntitySet="Parachutes" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Characters" Association="charsoog_BrDBModel.FK_Player_Characters">
+            <End Role="Character" EntitySet="Characters" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Emote" Association="charsoog_BrDBModel.FK_Player_Emote">
+            <End Role="Emote" EntitySet="Emotes" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Flag" Association="charsoog_BrDBModel.FK_Player_Flag">
+            <End Role="Flag" EntitySet="Flags" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Parachute" Association="charsoog_BrDBModel.FK_Player_Parachute">
+            <End Role="Parachute" EntitySet="Parachutes" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="HasByDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="HasByDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="HasByDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parachute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="HasByDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="CurrentCharacter" Type="Int32" Nullable="false" />
+          <Property Name="CurrentFlag" Type="Int32" Nullable="false" />
+          <Property Name="CurrentPara" Type="Int32" Nullable="false" />
+          <Property Name="CurrentEmote" Type="Int32" Nullable="false" />
+          <Property Name="CoinCount" Type="Int32" Nullable="false" />
+          <Property Name="TicketCount" Type="Int32" Nullable="false" />
+          <Property Name="HasBattlePass" Type="Boolean" Nullable="false" />
+          <Property Name="AiBehaviorIndex" Type="Int16" Nullable="false" />
+          <Property Name="TotalBattles" Type="Int32" Nullable="false" />
+          <Property Name="TotalWins" Type="Int32" Nullable="false" />
+          <Property Name="TotalKills" Type="Int32" Nullable="false" />
+          <Property Name="DoubleKills" Type="Int32" Nullable="false" />
+          <Property Name="TripleKills" Type="Int32" Nullable="false" />
+          <Property Name="ItemsCollected" Type="Int32" Nullable="false" />
+          <Property Name="GunsCollected" Type="Int32" Nullable="false" />
+          <Property Name="SupplyDrop" Type="Int32" Nullable="false" />
+          <Property Name="SupplyCreates" Type="Int32" Nullable="false" />
+          <Property Name="Experience" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="charsoog_BrDBModel.PlayerCharacter" FromRole="Player" ToRole="Character" />
+          <NavigationProperty Name="Emotes" Relationship="charsoog_BrDBModel.PlayerEmot" FromRole="Player" ToRole="Emote" />
+          <NavigationProperty Name="Flags" Relationship="charsoog_BrDBModel.PlayerFlag" FromRole="Player" ToRole="Flag" />
+          <NavigationProperty Name="Parachutes" Relationship="charsoog_BrDBModel.PlayerParachute" FromRole="Player" ToRole="Parachute" />
+          <NavigationProperty Name="Character" Relationship="charsoog_BrDBModel.FK_Player_Characters" FromRole="Player" ToRole="Character" />
+          <NavigationProperty Name="Emote" Relationship="charsoog_BrDBModel.FK_Player_Emote" FromRole="Player" ToRole="Emote" />
+          <NavigationProperty Name="Flag" Relationship="charsoog_BrDBModel.FK_Player_Flag" FromRole="Player" ToRole="Flag" />
+          <NavigationProperty Name="Parachute" Relationship="charsoog_BrDBModel.FK_Player_Parachute" FromRole="Player" ToRole="Parachute" />
+        </EntityType>
+        <Association Name="PlayerCharacter">
+          <End Type="charsoog_BrDBModel.Character" Role="Character" Multiplicity="*" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <Association Name="PlayerEmot">
+          <End Type="charsoog_BrDBModel.Emote" Role="Emote" Multiplicity="*" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <Association Name="PlayerFlag">
+          <End Type="charsoog_BrDBModel.Flag" Role="Flag" Multiplicity="*" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <Association Name="PlayerParachute">
+          <End Type="charsoog_BrDBModel.Parachute" Role="Parachute" Multiplicity="*" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Player_Characters">
+          <End Type="charsoog_BrDBModel.Character" Role="Character" Multiplicity="1" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentCharacter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Emote">
+          <End Type="charsoog_BrDBModel.Emote" Role="Emote" Multiplicity="1" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentEmote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Flag">
+          <End Type="charsoog_BrDBModel.Flag" Role="Flag" Multiplicity="1" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentFlag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Parachute">
+          <End Type="charsoog_BrDBModel.Parachute" Role="Parachute" Multiplicity="1" />
+          <End Type="charsoog_BrDBModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parachute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CurrentPara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="charsoog_BrDBModelStoreContainer" CdmEntityContainer="charsoog_BrDBEntities">
+        <EntitySetMapping Name="Characters">
+            <EntityTypeMapping TypeName="charsoog_BrDBModel.Character">
+              <MappingFragment StoreEntitySet="Characters">
+                <ScalarProperty Name="HasByDefault" ColumnName="HasByDefault" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emotes">
+            <EntityTypeMapping TypeName="charsoog_BrDBModel.Emote">
+              <MappingFragment StoreEntitySet="Emote">
+                <ScalarProperty Name="HasByDefault" ColumnName="HasByDefault" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flags">
+            <EntityTypeMapping TypeName="charsoog_BrDBModel.Flag">
+              <MappingFragment StoreEntitySet="Flag">
+                <ScalarProperty Name="HasByDefault" ColumnName="HasByDefault" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parachutes">
+            <EntityTypeMapping TypeName="charsoog_BrDBModel.Parachute">
+              <MappingFragment StoreEntitySet="Parachute">
+                <ScalarProperty Name="HasByDefault" ColumnName="HasByDefault" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="charsoog_BrDBModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="SupplyCreates" ColumnName="SupplyCreates" />
+                <ScalarProperty Name="SupplyDrop" ColumnName="SupplyDrop" />
+                <ScalarProperty Name="GunsCollected" ColumnName="GunsCollected" />
+                <ScalarProperty Name="ItemsCollected" ColumnName="ItemsCollected" />
+                <ScalarProperty Name="TripleKills" ColumnName="TripleKills" />
+                <ScalarProperty Name="DoubleKills" ColumnName="DoubleKills" />
+                <ScalarProperty Name="TotalKills" ColumnName="TotalKills" />
+                <ScalarProperty Name="TotalWins" ColumnName="TotalWins" />
+                <ScalarProperty Name="TotalBattles" ColumnName="TotalBattles" />
+                <ScalarProperty Name="AiBehaviorIndex" ColumnName="AiBehaviorIndex" />
+                <ScalarProperty Name="HasBattlePass" ColumnName="HasBattlePass" />
+                <ScalarProperty Name="TicketCount" ColumnName="TicketCount" />
+                <ScalarProperty Name="CoinCount" ColumnName="CoinCount" />
+                <ScalarProperty Name="CurrentEmote" ColumnName="CurrentEmote" />
+                <ScalarProperty Name="CurrentPara" ColumnName="CurrentPara" />
+                <ScalarProperty Name="CurrentFlag" ColumnName="CurrentFlag" />
+                <ScalarProperty Name="CurrentCharacter" ColumnName="CurrentCharacter" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PlayerCharacter" TypeName="charsoog_BrDBModel.PlayerCharacter" StoreEntitySet="PlayerCharacter">
+            <EndProperty Name="Player">
+              <ScalarProperty Name="Id" ColumnName="PlayerID" />
+            </EndProperty>
+            <EndProperty Name="Character">
+              <ScalarProperty Name="Id" ColumnName="CharacterID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PlayerEmot" TypeName="charsoog_BrDBModel.PlayerEmot" StoreEntitySet="PlayerEmot">
+            <EndProperty Name="Player">
+              <ScalarProperty Name="Id" ColumnName="PlayerId" />
+            </EndProperty>
+            <EndProperty Name="Emote">
+              <ScalarProperty Name="Id" ColumnName="EmoteID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PlayerFlag" TypeName="charsoog_BrDBModel.PlayerFlag" StoreEntitySet="PlayerFlag">
+            <EndProperty Name="Player">
+              <ScalarProperty Name="Id" ColumnName="PlayerID" />
+            </EndProperty>
+            <EndProperty Name="Flag">
+              <ScalarProperty Name="Id" ColumnName="FlagID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PlayerParachute" TypeName="charsoog_BrDBModel.PlayerParachute" StoreEntitySet="PlayerParachute">
+            <EndProperty Name="Player">
+              <ScalarProperty Name="Id" ColumnName="PlayerID" />
+            </EndProperty>
+            <EndProperty Name="Parachute">
+              <ScalarProperty Name="Id" ColumnName="ParachuteID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
