@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ParasController.cs" />
     <Compile Include="Controllers\FlagsController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
