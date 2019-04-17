@@ -28,35 +28,40 @@ namespace BrServer.Controllers
 
             var jStat = jInput["PlayerStat"];
 
-            var player = new Player
-            {
-                Id = jInput["ID"].Value<int>(),
-                Name = jInput["Name"].Value<string>(),
-                AiBehaviorIndex = jInput["AiBehaviorIndex"].Value<short>(),
-                CoinCount = jInput["CoinCount"].Value<int>(),
-                TicketCount = jInput["TicketCount"].Value<int>(),
-                HasBattlePass = jInput["HasBattlePass"].Value<bool>(),
+            var id = jInput["ID"].Value<int>();
 
-                CurrentCharacter = jInput["CurrentCharacter"].Value<int>(),
-                CurrentFlag = jInput["CurrentFlag"].Value<int>(),
-                CurrentEmote = jInput["CurrentEmote"].Value<int>(),
-                CurrentPara = jInput["CurrentPara"].Value<int>(),
+            var player = db.Players.Find(id);
 
-                TotalBattles= jStat["TotalBattles"].Value<int>(),
-                TotalWins= jStat["TotalWins"].Value<int>(),
-                TotalKills= jStat["TotalKills"].Value<int>(),
-                DoubleKills= jStat["DoubleKills"].Value<int>(),
-                TripleKills = jStat["TripleKills"].Value<int>(),
-                ItemsCollected = jStat["ItemsCollected"].Value<int>(),
-                GunsCollected = jStat["GunsCollected"].Value<int>(),
-                SupplyDrop = jStat["SupplyDrop"].Value<int>(),
-                SupplyCreates = jStat["SupplyCreates"].Value<int>(),
-                Experience = jStat["Experience"].Value<int>(),
+            if (player == null)
+                return BadRequest("Player id not found!");
 
-            };
+            player.Name = jInput["Name"].Value<string>();
+            player.AiBehaviorIndex = jInput["AiBehaviorIndex"].Value<short>();
+            player.CoinCount = jInput["CoinCount"].Value<int>();
+            player.TicketCount = jInput["TicketCount"].Value<int>();
+            player.HasBattlePass = jInput["HasBattlePass"].Value<bool>();
+
+            player.CurrentCharacter = jInput["CurrentCharacter"].Value<int>();
+            player.CurrentFlag = jInput["CurrentFlag"].Value<int>();
+            player.CurrentEmote = jInput["CurrentEmote"].Value<int>();
+            player.CurrentPara = jInput["CurrentPara"].Value<int>();
+
+            player.TotalBattles = jStat["TotalBattles"].Value<int>();
+            player.TotalWins = jStat["TotalWins"].Value<int>();
+            player.TotalKills = jStat["TotalKills"].Value<int>();
+            player.DoubleKills = jStat["DoubleKills"].Value<int>();
+            player.TripleKills = jStat["TripleKills"].Value<int>();
+            player.ItemsCollected = jStat["ItemsCollected"].Value<int>();
+            player.GunsCollected = jStat["GunsCollected"].Value<int>();
+            player.SupplyDrop = jStat["SupplyDrop"].Value<int>();
+            player.SupplyCreates = jStat["SupplyCreates"].Value<int>();
+            player.Experience = jStat["Experience"].Value<int>();
 
             // add characters
-            foreach (var i in jInput["AvalableCharacters"].Values<int>())
+            var newCharecters =jInput["AvalableCharacters"].Values<int>();
+            var oldCharacters = player.Characters.Select(c => c.Id);
+
+            foreach (var i in newCharecters.Except(oldCharacters))
             {
                 var character = db.Characters.Find(i);
 
@@ -67,7 +72,11 @@ namespace BrServer.Controllers
             };
 
             // add Flags
-            foreach (var i in jInput["AvalableFlags"].Values<int>())
+            var newCharecters = jInput["AvalableFlags"].Values<int>();
+            var oldCharacters = player.Characters.Select(c => c.Id);
+
+            foreach (var i in newCharecters.Except(oldCharacters))
+                foreach (var i in jInput["AvalableFlags"].Values<int>())
             {
                 var flag = db.Flags.Find(i);
 
@@ -99,8 +108,6 @@ namespace BrServer.Controllers
                 player.Parachutes.Add(para);
             };
 
-            db.Players.Attach(player);
-            db.Entry(player).State = EntityState.Modified;
 
             try
             {
