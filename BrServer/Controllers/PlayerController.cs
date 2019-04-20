@@ -72,11 +72,10 @@ namespace BrServer.Controllers
             };
 
             // add Flags
-            var newCharecters = jInput["AvalableFlags"].Values<int>();
-            var oldCharacters = player.Characters.Select(c => c.Id);
+            var newFlags = jInput["AvalableFlags"].Values<int>();
+            var oldFlags = player.Flags.Select(c => c.Id);
 
-            foreach (var i in newCharecters.Except(oldCharacters))
-                foreach (var i in jInput["AvalableFlags"].Values<int>())
+            foreach (var i in newFlags.Except(oldFlags))
             {
                 var flag = db.Flags.Find(i);
 
@@ -87,7 +86,10 @@ namespace BrServer.Controllers
             };
 
             // add Emotes
-            foreach (var i in jInput["AvalableEmotes"].Values<int>())
+            var newEmotes = jInput["AvalableEmotes"].Values<int>();
+            var oldEmotes = player.Emotes.Select(c => c.Id);
+
+            foreach (var i in newEmotes.Except(oldEmotes))
             {
                 var emote = db.Emotes.Find(i);
 
@@ -98,7 +100,10 @@ namespace BrServer.Controllers
             };
 
             // add paras
-            foreach (var i in jInput["AvalableParas"].Values<int>())
+            var newParas = jInput["AvalableParas"].Values<int>();
+            var oldParas = player.Parachutes.Select(c => c.Id);
+
+            foreach (var i in newParas.Except(oldParas))
             {
                 var para = db.Parachutes.Find(i);
 
